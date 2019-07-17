@@ -1,0 +1,30 @@
+server:
+  port: 80
+  context-path: /
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    druid:
+      initial-size: 1  # 初始化大小
+      min-idle: 5   # 初始化最小
+      max-active: 20   # 初始化最大
+      max-wait: 60000  # 配置获取连接等待超时的时间
+      time-between-eviction-runs-millis: 60000  # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      min-evictable-idle-time-millis: 40000  # 配置一个连接在池中最小生存的时间，单位是毫秒
+      validation-query: SELECT 1 FROM DUAL  #指定获取连接时连接校验的sql查询语句.
+      test-while-idle: true  #当连接空闲时，是否执行连接测试
+      test-on-borrow: false  #当从连接池借用连接时，是否测试该连接.
+      test-on-return: false  #在连接归还到连接池时是否测试该连接
+      pool-prepared-statements: true  # 打开PSCache，并且指定每个连接上PSCache的大小
+      max-pool-prepared-statement-per-connection-size: 20
+      use-global-data-source-stat: true # 合并多个DruidDataSource的监控数据
+      filters: stat,wall,logback   # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000 # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
