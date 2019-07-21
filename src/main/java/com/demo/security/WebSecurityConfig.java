@@ -99,6 +99,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //在执行MyUsernamePasswordAuthenticationFilter之前执行jwtAuthenticationTokenFilter
         http.addFilterBefore(jwtAuthenticationTokenFilter, MyUsernamePasswordAuthenticationFilter.class);
+        
+        //用重写的Filter替换掉原有的UsernamePasswordAuthenticationFilter
+        http.addFilterAt(customAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);
 
          // 禁用缓存
         http.headers().cacheControl();
